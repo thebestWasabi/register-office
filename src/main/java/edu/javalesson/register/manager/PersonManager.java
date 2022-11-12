@@ -1,6 +1,9 @@
 package edu.javalesson.register.manager;
 
 import edu.javalesson.register.domain.Person;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -13,6 +16,31 @@ import java.util.List;
 public class PersonManager {
 
     public static void main(String[] args) {
+//        sessionExample();
+        jpaExample();
+    }
+
+    private static void jpaExample() {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("persistence");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+
+        Person person1 = new Person();
+        person1.setFirstName("Никита");
+        person1.setLastName("Коньков");
+        entityManager.persist(person1);
+        System.out.println(person1.getPersonId());
+
+        entityManager.getTransaction().commit();
+        entityManager.close();
+
+        entityManager = entityManagerFactory.createEntityManager();
+        List list = entityManager.createQuery("FROM Person").getResultList();
+        list.forEach(p1 -> System.out.println(p1));
+        entityManager.close();
+    }
+
+    private static void sessionExample() {
         SessionFactory sessionFactory = buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.getTransaction().begin();
