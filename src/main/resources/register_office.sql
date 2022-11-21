@@ -1,5 +1,6 @@
-drop table if exist ro_passport;
-drop table if exist ro_person;
+drop table if exists ro_passport;
+drop table if exists ro_birth_certifaicate;
+drop table if exists ro_person;
 
 create table ro_person
 (
@@ -22,6 +23,20 @@ create table ro_passport
     issue_department varchar(200),
     primary key (passport_id),
     foreign key (person_id) references ro_person (person_id) on delete restrict
+);
+
+create table ro_birth_certificate
+(
+    birth_certificate_id serial      not null,
+    number_certificate   varchar(20) not null,
+    date_issue           date        not null,
+    person_id            integer     not null,
+    father_id            integer     not null,
+    mother_id            integer     not null,
+    primary key (birth_certificate_id),
+    foreign key (person_id) references ro_person (person_id) on delete restrict,
+    foreign key (father_id) references ro_person (person_id) on delete restrict,
+    foreign key (mother_id) references ro_person (person_id) on delete restrict
 );
 
 insert into ro_person(sex, first_name, last_name, patronymic, date_birth)

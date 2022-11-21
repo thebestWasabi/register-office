@@ -12,18 +12,22 @@ public class Passport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "passport_id")
     private Long passportId;
+
     @ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id")
     private Person person;
+
     @Column(name = "series")
     private String series;
+
     @Column(name = "number")
     private String number;
+
     @Column(name = "date_issue")
     private LocalDate issueDate;
+
     @Column(name = "issue_department")
     private String issueDepartment;
-
 
     public Long getPassportId() {
         return passportId;
