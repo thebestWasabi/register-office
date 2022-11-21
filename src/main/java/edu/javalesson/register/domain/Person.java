@@ -7,6 +7,8 @@ import java.util.List;
 
 @Table(name = "ro_person")
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "sex", discriminatorType = DiscriminatorType.INTEGER)
 public class Person {
 
     @Id
@@ -17,7 +19,7 @@ public class Person {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @Column(name = "patromymic")
+    @Column(name = "patronymic")
     private String patronymic;
     @Column(name = "date_birth")
     private LocalDate dateOfBirth;
