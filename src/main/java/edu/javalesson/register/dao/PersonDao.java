@@ -4,6 +4,7 @@ import edu.javalesson.register.domain.Person;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.Query;
 
 import java.util.List;
 
@@ -17,10 +18,8 @@ public class PersonDao {
     }
 
     public List<Person> findPersons() {
-        return entityManager.createQuery(
-                        "SELECT p FROM Person p " +
-                                "LEFT JOIN FETCH p.passports ps " +
-                                "LEFT JOIN FETCH p.birthCertificate bs")
-                .getResultList();
+        Query query = entityManager.createNamedQuery("Person.findPersons");
+        query.setParameter("personId", 1L);
+        return query.getResultList();
     }
 }
