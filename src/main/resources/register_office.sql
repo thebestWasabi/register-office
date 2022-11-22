@@ -1,5 +1,6 @@
 drop table if exists ro_passport;
-drop table if exists ro_birth_certifaicate;
+drop table if exists ro_birth_certificate;
+drop table if exists ro_marriage_certificate;
 drop table if exists ro_person;
 
 create table ro_person
@@ -39,9 +40,27 @@ create table ro_birth_certificate
     foreign key (mother_id) references ro_person (person_id) on delete restrict
 );
 
+create table ro_marriage_certificate
+(
+    marriage_certificate_id serial      not null,
+    number_certificate      varchar(20) not null,
+    date_issue              date        not null,
+    husband_id              integer     not null,
+    wife_id                 integer     not null,
+    active                  boolean default false,
+    end_date                date,
+    primary key (marriage_certificate_id),
+    foreign key (husband_id) references ro_person (person_id) on delete restrict,
+    foreign key (wife_id) references ro_person (person_id) on delete restrict
+);
+
 insert into ro_person(sex, first_name, last_name, patronymic, date_birth)
 values (1, 'Елена', 'Васильева', 'Сергеевна', '1998-03-24'),
-       (2, 'Олег', 'Васильев', 'Петрович' '1997-10-16');
+       (2, 'Олег', 'Васильев', 'Петрович', '1997-10-16'),
+       (2, 'Николай', 'Васильев', 'Олегович', '2018-10-21');
 
 insert into ro_passport (person_id, series, number, date_issue, issue_department)
-values (1, '40000' '123456', '2018-04-10', 'Department passport');
+values (1, '40000', '123456', '2018-04-10', 'Department passport');
+
+insert into ro_birth_certificate(number_certificate, date_issue, person_id, father_id, mother_id)
+values ('123 Birth', '2018-1-01', '3', '2', '1');

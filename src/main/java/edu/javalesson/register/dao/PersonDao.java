@@ -9,7 +9,7 @@ import java.util.List;
 
 public class PersonDao {
 
-    private EntityManager  entityManager;
+    private EntityManager entityManager;
 
     public PersonDao() {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("persistence");
@@ -17,6 +17,10 @@ public class PersonDao {
     }
 
     public List<Person> findPersons() {
-        return entityManager.createQuery("select p from Person p").getResultList();
+        return entityManager.createQuery(
+                        "SELECT p FROM Person p " +
+                                "LEFT JOIN FETCH p.passports ps " +
+                                "LEFT JOIN FETCH p.birthCertificate bs")
+                .getResultList();
     }
 }
