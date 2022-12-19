@@ -11,18 +11,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class MarriageDao {
 
-    private static final Logger logger = LoggerFactory.getLogger(MarriageDao.class);
+    private static final Logger log = LoggerFactory.getLogger(MarriageDao.class);
+
     private EntityManager entityManager;
 
     @Value("${test.value}")
     private String test;
 
     public MarriageCertificate findMarriageCertificate(MarriageRequest request) {
-        logger.info("findMarriageCertificate called:{}", test);
+        log.info("findMarriageCertificate called:{}", test);
         return null;
     }
 
-    public void setTest(String test) {
-        this.test = test;
-    }
 }

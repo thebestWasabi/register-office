@@ -9,19 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-@Service("marriageController")
+@Service("controller")
 public class MarriageController {
 
-    private static final Logger logger = LoggerFactory.getLogger(MarriageController.class);
+    private static final Logger log = LoggerFactory.getLogger(MarriageController.class);
+
     private MarriageManager marriageManager;
 
     public MarriageResponse findMarriageCertificate(MarriageRequest request) {
-        logger.info("findMarriageCertificate called");
+        log.info("findMarriageCertificate called");
         return marriageManager.findMarriageCertificate(request);
     }
 
     @Autowired
-    @Qualifier("marriageManager")
+    @Qualifier("marriageService")
     public void setMarriageManager(MarriageManager marriageManager) {
         this.marriageManager = marriageManager;
     }
